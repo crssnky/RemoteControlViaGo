@@ -1,0 +1,47 @@
+{{template "header" .}}
+
+<div class="container-fluid">
+  <h2>Color Grading</h2>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class=" form-check">
+        <input class="form-check-input" type="checkbox" value="" id="IsUseTemperatureType" />
+        <label class="form-check-label" for="flexCheckDefault">Temperature Type</label>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <select class="form-select" aria-label="Temperature Type">
+        <option selected>White Balance</option>
+        <option>Color Temperature</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class=" form-check">
+        <input class="form-check-input" type="checkbox" value="" id="IsUseTemp" />
+        <label class="form-check-label" for="flexCheckDefault">Temp</label>
+        <p id="TempDisplayValue">0.0</p>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <input type="range" class="form-range" min="1500" max="15000">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class=" form-check">
+        <input class="form-check-input" type="checkbox" value="" id="IsUseSaturation" />
+        <label class="form-check-label" for="flexCheckDefault">Saturation</label>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <input type="color" class="form-control form-control-color" value="#2743d2" title="Saturation">
+    </div>
+  </div>
+</div>
+
+<script>
+</script>
+
+{{template "footer"}}
