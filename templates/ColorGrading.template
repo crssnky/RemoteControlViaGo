@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="col-sm-8">
-      <select class="form-select" aria-label="Temperature Type">
+      <select class="form-select" aria-label="Temperature Type" id="TemperatureTypeSelector">
         <option selected>White Balance</option>
         <option>Color Temperature</option>
       </select>
@@ -42,6 +42,32 @@
 </div>
 
 <script>
+  const IsUseTemperatureType = document.querySelector('#IsUseTemperatureType');
+  const TemperatureTypeSelector = document.querySelector('#TemperatureTypeSelector');
+
+  IsUseTemperatureType.addEventListener('change', (event) => {
+    const XHR = new XMLHttpRequest();
+    let urlEncodedData = "",
+      urlEncodedDataPairs = [];
+
+    urlEncodedDataPairs.push("IsUseTemperatureType=" + event.target.checked);
+    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+
+    XHR.open("post", "http://localhost:8080/IsUseTemperatureType");
+    XHR.send(urlEncodedData);
+  });
+
+  TemperatureTypeSelector.addEventListener("change", (event) => {
+    const XHR = new XMLHttpRequest();
+    let urlEncodedData = "",
+      urlEncodedDataPairs = [];
+
+    urlEncodedDataPairs.push("TemperatureTypeSelector=" + event.target.value);
+    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+
+    XHR.open("post", "http://localhost:8080/IsUseTemperatureType");
+    XHR.send(urlEncodedData);
+  })
 </script>
 
 {{template "footer"}}
