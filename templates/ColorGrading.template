@@ -5,12 +5,12 @@
   <div class="row">
     <div class="col-sm-4">
       <div class=" form-check">
-        <input class="form-check-input" type="checkbox" value="" id="IsUseTemperatureType" />
+        <input class="form-check-input" type="checkbox" id="IsUseTemperatureType" onchange="sendData({IsUseTemperatureType: event.target.checked})" />
         <label class="form-check-label" for="flexCheckDefault">Temperature Type</label>
       </div>
     </div>
     <div class="col-sm-8">
-      <select class="form-select" aria-label="Temperature Type" id="TemperatureTypeSelector">
+      <select class="form-select" aria-label="Temperature Type" id="TemperatureTypeSelector" onchange="sendData({TemperatureTypeSelector: event.target.value})">
         <option selected>White Balance</option>
         <option>Color Temperature</option>
       </select>
@@ -19,55 +19,40 @@
   <div class="row">
     <div class="col-sm-4">
       <div class=" form-check">
-        <input class="form-check-input" type="checkbox" value="" id="IsUseTemp" />
+        <input class="form-check-input" type="checkbox" value="" id="IsUseTemp" onchange="sendData({IsUseTemp: event.target.checked})" />
         <label class="form-check-label" for="flexCheckDefault">Temp</label>
         <p id="TempDisplayValue">0.0</p>
       </div>
     </div>
     <div class="col-sm-8">
-      <input type="range" class="form-range" min="1500" max="15000">
+      <input type="range" class="form-range" min="1500" max="15000" id="Temperature" oninput="sendData({Temperature: event.target.value})">
     </div>
   </div>
   <div class="row">
     <div class="col-sm-4">
       <div class=" form-check">
-        <input class="form-check-input" type="checkbox" value="" id="IsUseSaturation" />
+        <input class="form-check-input" type="checkbox" value="" id="IsUseSaturation" onchange="sendData({IsUseSaturation: event.target.checked})" />
         <label class="form-check-label" for="flexCheckDefault">Saturation</label>
       </div>
     </div>
     <div class="col-sm-8">
-      <input type="color" class="form-control form-control-color" value="#2743d2" title="Saturation">
+      <input type="color" class="form-control form-control-color" value="#2743d2" title="Saturation" onchange="sendData({Saturation: event.target.value})">
     </div>
   </div>
 </div>
 
 <script>
-  const IsUseTemperatureType = document.querySelector('#IsUseTemperatureType');
-  const TemperatureTypeSelector = document.querySelector('#TemperatureTypeSelector');
-
-  IsUseTemperatureType.addEventListener('change', (event) => {
+  function sendData(data) {
     const XHR = new XMLHttpRequest();
-    let urlEncodedData = "",
-      urlEncodedDataPairs = [];
+    const FD = new FormData();
 
-    urlEncodedDataPairs.push("IsUseTemperatureType=" + event.target.checked);
-    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
-
-    XHR.open("post", "http://localhost:8080/IsUseTemperatureType");
-    XHR.send(urlEncodedData);
-  });
-
-  TemperatureTypeSelector.addEventListener("change", (event) => {
-    const XHR = new XMLHttpRequest();
-    let urlEncodedData = "",
-      urlEncodedDataPairs = [];
-
-    urlEncodedDataPairs.push("TemperatureTypeSelector=" + event.target.value);
-    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
-
-    XHR.open("post", "http://localhost:8080/IsUseTemperatureType");
-    XHR.send(urlEncodedData);
-  })
+    for (name in data) {
+      FD.append(name, data[name]);
+    }
+    XHR.open("post", "http://localhost:8080/pp");
+    XHR.setRequestHeader("Content-Type", "application/json");
+    XHR.send(JSON.stringify(Object.fromEntries(FD)));
+  }
 </script>
 
 {{template "footer"}}
